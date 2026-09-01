@@ -7,7 +7,7 @@
 | 层次 | 技术方案 | 说明 |
 |------|---------|------|
 | 扩展框架 | Chrome Manifest V3 | Chrome 扩展最新规范 |
-| 前端框架 | React 18 | 构建插件弹窗 UI |
+| 前端框架 | React 18 | 构建插件侧边栏 UI |
 | 构建工具 | Vite + @crxjs/vite-plugin | 专为 Chrome 扩展优化的构建方案 |
 | 内容提取 | Defuddle（主）+ Mozilla Readability（备） | 文章内容提取与 HTML 净化 |
 | HTML 转 Markdown | Turndown.js | 将提取后的 HTML 转为 Markdown |
@@ -21,7 +21,7 @@
 
 ```
 ┌──────────────────────────────────────────────┐
-│                   Popup UI                    │
+│              Side Panel (右侧边栏)              │
 │         (React + md-wx 组件展示层)              │
 ├──────────────────────────────────────────────┤
 │               业务逻辑层                       │
@@ -137,7 +137,7 @@ Defuddle 和 Readability 均会保留文章内的 `<img>` 标签。在 Turndown.
 逐 chunk 接收翻译结果
         │
         ▼
-实时更新 Popup 中的 md-wx 组件（打字机效果）
+实时更新侧边栏中的 md-wx 组件（打字机效果）
         │
         ▼
 翻译完成后，将结果存入 chrome.storage.local
@@ -169,15 +169,15 @@ chrome-extension-en-translation/
 │   └── manifest.json                # Chrome 扩展清单
 │
 ├── src/                             # 源码目录
-│   ├── popup/                       # 插件弹窗
-│   │   ├── index.html               # 弹窗 HTML 入口
-│   │   ├── main.tsx                 # 弹窗 React 入口
-│   │   ├── App.tsx                  # 弹窗主组件
-│   │   ├── components/              # 弹窗子组件
+│   ├── popup/                       # 插件侧边栏（Side Panel）
+│   │   ├── index.html               # 侧边栏 HTML 入口
+│   │   ├── main.tsx                 # 侧边栏 React 入口
+│   │   ├── App.tsx                  # 侧边栏主组件
+│   │   ├── components/              # 侧边栏子组件
 │   │   │   ├── StatusBar.tsx        # 状态栏组件
 │   │   │   ├── TranslationView.tsx  # 翻译结果展示区（集成 md-wx）
 │   │   │   └── ActionButtons.tsx    # 操作按钮（复制/重新翻译/取消）
-│   │   └── styles/                  # 弹窗样式
+│   │   └── styles/                  # 侧边栏样式
 │   │       └── popup.css
 │   │
 │   ├── options/                     # 设置页
@@ -221,7 +221,7 @@ chrome-extension-en-translation/
 
 ### 4.1 目录设计原则
 
-- **按功能模块组织**：popup、options、content、background 各自独立目录，职责清晰
+- **按功能模块组织**：popup（侧边栏）、options、content、background 各自独立目录，职责清晰
 - **共享逻辑抽离**：shared 目录存放跨模块共享的类型、常量和消息协议
 - **提取与转换分离**：content 下分 extractor 和 converter 两个子模块，便于独立测试和替换
 
@@ -230,7 +230,7 @@ chrome-extension-en-translation/
 ### 5.1 消息流
 
 ```
-Popup (React)                    Content Script              Service Worker
+Side Panel (React)               Content Script              Service Worker
     │                                │                           │
     │  ── 1. 请求提取内容 ──────────►  │                           │
     │                                │                           │
@@ -268,7 +268,7 @@ Popup (React)                    Content Script              Service Worker
         │
         ▼
 ┌──────────────────────────────────────────────────┐
-│  Popup 打开，检查 chrome.storage.local 中是否有   │
+│  侧边栏打开，检查 chrome.storage.local 中是否有    │
 │  上次翻译结果                                     │
 │  ├── 有：加载上次结果，展示在 md-wx 组件中          │
 │  └── 无：显示空状态                                │
@@ -295,9 +295,9 @@ Popup (React)                    Content Script              Service Worker
 │                                                  │
 │  Background 执行：                                │
 │  1. 通过 OpenAI SDK 发起 Streaming 请求           │
-│  2. 逐 chunk 返回 TRANSLATE_CHUNK 给 Popup        │
+│  2. 逐 chunk 返回 TRANSLATE_CHUNK 给 Side Panel        │
 │                                                  │
-│  Popup 逐块更新 md-wx 组件，实现打字机效果          │
+│  Side Panel 逐块更新 md-wx 组件，实现打字机效果          │
 └──────────────────────────────────────────────────┘
         │
         ▼
@@ -335,7 +335,7 @@ interface TranslationResult {
 
 ### 7.1 集成方式
 
-md-wx 作为 npm package 安装到项目中，在 Popup 的翻译结果展示区中使用。
+md-wx 作为 npm package 安装到项目中，在侧边栏的翻译结果展示区中使用。
 
 **安装命令：**
 
@@ -358,7 +358,7 @@ npm install md-wx
 | `enableCopy` | `true` | 允许用户复制翻译结果 |
 | `enableThemeSwitch` | `false` | 禁用主题切换（统一使用默认主题） |
 | `enableViewModeToggle` | `false` | 禁用视图模式切换 |
-| `defaultViewMode` | `'mobile'` | 插件弹窗较小，使用移动端视图 |
+| `defaultViewMode` | `'mobile'` | 侧边栏宽度有限，使用移动端视图 |
 
 ### 7.3 打字机效果实现原理
 
@@ -420,7 +420,7 @@ npm install md-wx
 
 | 依赖 | 版本 | 用途 |
 |------|------|------|
-| `react` | ^18 | 弹窗 UI 框架 |
+| `react` | ^18 | 侧边栏 UI 框架 |
 | `react-dom` | ^18 | DOM 渲染 |
 | `defuddle` | latest | 文章内容提取 |
 | `@mozilla/readability` | ^0.5 | 内容提取降级方案 |
@@ -440,7 +440,7 @@ npm install md-wx
 - Defuddle/Readability 在 Content Script 中同步执行，不应阻塞主线程过久（预计 < 50ms）
 - Turndown.js 转换在小规模 DOM 上性能可忽略
 - Streaming 翻译的逐块更新使用 `requestAnimationFrame` 节流，避免 React 渲染频繁
-- 插件弹窗使用 `will-change` 隔离渲染层，避免影响宿主页面
+- 侧边栏使用 `will-change` 隔离渲染层，避免影响宿主页面
 
 ### 10.2 安全
 
