@@ -11,8 +11,14 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\""
   },
   "dependencies": {
+    "@mozilla/readability": "^0.5.0",
+    "@types/turndown": "^5.0.4",
+    "defuddle": "^0.19.2",
+    "md-wx": "^1.0.1",
+    "openai": "^4.104.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "turndown": "^7.2.0"
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "^2.0.0",

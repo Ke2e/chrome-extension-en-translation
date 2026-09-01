@@ -1,0 +1,326 @@
+/* ============================================================
+   设置页样式 — Claude Design System
+   色彩、字体、间距、阴影均引用 tokens.css 设计令牌
+   ============================================================ */
+
+/* ===== 全局重置 ===== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== 自定义滚动条 ===== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-400);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-400);
+}
+
+/* ===== 页面骨架 ===== */
+
+.options-page {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: var(--space-12) var(--space-6) var(--space-12);
+}
+
+/* ===== 页面头部 ===== */
+
+.options-header {
+  margin-bottom: var(--space-8);
+}
+
+.options-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--color-text-strong);
+  line-height: 1.3;
+}
+
+.options-subtitle {
+  margin-top: var(--space-2);
+  font-size: 14px;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* ===== 表单布局 ===== */
+
+.options-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* ===== 卡片区块 ===== */
+
+.options-section {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-6);
+  transition: box-shadow var(--transition-normal);
+}
+
+.options-section:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* ===== 区块标题 ===== */
+
+.section-title {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* ===== 表单行 ===== */
+
+.form-row {
+  margin-bottom: var(--space-5);
+}
+
+.form-row:last-child {
+  margin-bottom: 0;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-strong);
+}
+
+.required {
+  color: var(--color-error);
+  margin-left: 2px;
+}
+
+/* ===== 输入框 ===== */
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  height: 40px;
+  padding: 0 var(--space-3);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--color-text);
+  background-color: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition-normal),
+    box-shadow var(--transition-normal);
+}
+
+.form-textarea {
+  height: auto;
+  padding: var(--space-3);
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.6;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--color-text-subtle);
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(201, 100, 66, 0.12);
+}
+
+.form-input:focus-visible,
+.form-textarea:focus-visible {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 1px;
+}
+
+/* ===== 表单错误 ===== */
+
+.form-error {
+  margin-top: var(--space-2);
+  font-size: 13px;
+  color: var(--color-error);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* ===== 关于区块 ===== */
+
+.about-version {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+}
+
+.about-stack {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+/* ===== 状态提示 ===== */
+
+.options-status {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.options-status--success {
+  color: var(--success-600);
+  background-color: var(--color-success-bg);
+  border: 1px solid var(--success-100);
+}
+
+.options-status--error {
+  color: var(--error-600);
+  background-color: var(--color-error-bg);
+  border: 1px solid var(--error-200);
+}
+
+/* ===== 按钮组 ===== */
+
+.options-actions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 var(--space-5);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: background-color var(--transition-normal),
+    color var(--transition-normal), border-color var(--transition-normal),
+    box-shadow var(--transition-normal), transform var(--transition-fast);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:active {
+  background-color: var(--color-primary-active);
+}
+
+.btn-secondary {
+  background-color: var(--color-bg-elevated);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-muted);
+  border-color: var(--color-border-strong);
+}
+
+/* ===== 加载与页脚 ===== */
+
+.options-loading {
+  text-align: center;
+  color: var(--color-text-muted);
+  padding: var(--space-12) 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+
+.options-footer {
+  margin-top: var(--space-8);
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-text-subtle);
+  font-family: var(--font-sans);
+}
+
+/* ===== 响应式 ===== */
+
+@media (max-width: 600px) {
+  .options-page {
+    padding: var(--space-8) var(--space-4) var(--space-10);
+  }
+
+  .options-section {
+    padding: var(--space-5);
+  }
+
+  .options-actions {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
