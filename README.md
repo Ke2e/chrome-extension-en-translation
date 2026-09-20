@@ -4,6 +4,14 @@ Chrome 浏览器翻译插件（Manifest V3）：一键提取英文网页正文�
 
 项目采用 SDD（Spec-Driven Development）工作流开发，需求、架构与任务拆解文档见 [docs](#sdd-文档)。
 
+<!-- 项目预览：补充翻译效果截图（侧边栏打字机渲染）时，将图片放入 docs/screenshots/ 并取消下方注释
+## 项目预览
+
+| 侧边栏翻译效果 |
+| --- |
+| ![侧边栏翻译效果](docs/screenshots/sidepanel.png) |
+-->
+
 ## 功能特性
 
 - **双引擎正文提取**：优先使用 Defuddle（Obsidian 作者开发的网页剪藏提取库），提取结果经过「文章性」启发式校验（正文长度、段落结构、链接文本占比），不达标时自动降级为 Mozilla Readability（Firefox 阅读模式同款），两者均失败时明确提示页面不支持提取
